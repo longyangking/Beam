@@ -3,7 +3,7 @@
 # License: LGPL-2.1
 import numpy as np
 
-PA,PR,FU = 0,1,2
+PR,FU = 0,1
 
 class BPM:
     def __init__(self,n0,k0,dx,dy,Nx,Ny,Z,dn=None,source=None,initfield=None,verbose=False):
@@ -19,8 +19,8 @@ class BPM:
         self.source = source        # source should be a function about source
         self.initfield = initfield  # initfield should be a matrix
 
-        self.fieldr = np.zeros([3,Nx,Ny],)
-        self.fieldi = np.zeros([3,Nx,Ny])
+        self.fieldr = np.zeros([2,Nx,Ny],)
+        self.fieldi = np.zeros([2,Nx,Ny])
 
         self.verbose = verbose
 
@@ -41,16 +41,18 @@ class BPM:
         for t in range(self.Nz):
             sourcer = np.real(self.source(dz*t))
             deltafieldr = laplacian(self.fieldr[PR,:,:])
-            #self.fieldi[FU,1:-1,1:-1] = self.fieldi[PA,1:-1,1:-1]  \
-            #    + a*dz/dx**2 * deltafieldr \
-            #    - dz * Vz(dz*t)* psi_r[PR,1:-1,1:-1] \
-            #    + dz * sourcer[1:-1,1:-1]
+            self.fieldi[FU,1:-1,1:-1] = self.fieldi[PA,1:-1,1:-1]  \
+                + a*dz/dx**2 * deltafieldr \
+                - dz*(-self.k0*self.dn(dz*t))* psi_r[PR,1:-1,1:-1] \
+                + dz*sourcer[1:-1,1:-1]
                 
-            #deltapsi = laplacian(psi_i[PR,:,:])
-            #psi_r[FU,1:-1,1:-1] = psi_r[PA,1:-1,1:-1]  \
-            #    - a*dz/dx**2 * deltapsi \
-            #    + dz * Vz(dz*(t+0.5))* psi_i[PR,1:-1,1:-1]\
-            #    - dz * sourcei[1:-1,1:-1]
+            sourcei = np.real(self.source(dz*(t+0.5))
+            deltapsi = laplacian(psi_i[PR,:,:])
+            psi_r[FU,1:-1,1:-1] = psi_r[PA,1:-1,1:-1]  \
+                - a*dz/dx**2 * deltapsi \
+                + dz * (-self.k0*self.dn(dz*(t+0.5))* psi_i[PR,1:-1,1:-1]\
+                - dz * sourcei[1:-1,1:-1]
+
 
             if self.verbose:
                 if t%(self.Nz/20) == 0:
