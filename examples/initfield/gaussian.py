@@ -19,7 +19,7 @@ if __name__ == '__main__':
     n0 = 1.45
     k0 = 2.0*np.pi/(633.0*10**-9)
 
-    Z = 10.0*10**-3
+    Z = 30.0*10**-3
     
     x = np.linspace(0,Lx,Nx)
     y = np.linspace(0,Ly,Ny)

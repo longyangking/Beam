@@ -31,3 +31,6 @@ class Bandstructure:
 
         # TODO
         
+    def hamiltonian(self):
+        
+    def edgestate(self):

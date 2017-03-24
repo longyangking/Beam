@@ -109,49 +109,61 @@ class BPM:
         Absorbing Boundary
         '''
         # Boundary (will be replaced by PML)
-        #self.fieldi[FU,0,:] = 2*self.fieldi[FU,1,:] - self.fieldi[FU,2,:]
-        #self.fieldi[FU,-1,:] = 2*self.fieldi[FU,-2,:] - self.fieldi[FU,-3,:]
-        #self.fieldi[FU,:,0] = 2*self.fieldi[FU,:,1] - self.fieldi[FU,:,2]
-        #self.fieldi[FU,:,-1] = 2*self.fieldi[FU,:,-2] - self.fieldi[FU,:,-3]
+        #self.fieldi[FU,0,:] = self.fieldi[FU,1,:]
+        #self.fieldi[FU,-1,:] = self.fieldi[FU,-2,:]
+        #self.fieldi[FU,:,0] = self.fieldi[FU,:,1]
+        #self.fieldi[FU,:,-1] = self.fieldi[FU,:,-2]
 
         # Boundary (will be replaced by PML)
-        #self.fieldr[FU,0,:] = 2*self.fieldr[FU,1,:] - self.fieldr[FU,2,:]
-        #self.fieldr[FU,-1,:] = 2*self.fieldr[FU,-2,:] - self.fieldr[FU,-3,:]
-        #self.fieldr[FU,:,0] = 2*self.fieldr[FU,:,1] - self.fieldr[FU,:,2]
-        #self.fieldr[FU,:,-1] = 2*self.fieldr[FU,:,-2] - self.fieldr[FU,:,-3]
+        #self.fieldr[FU,0,:] = self.fieldr[FU,1,:]
+        #self.fieldr[FU,-1,:] = self.fieldr[FU,-2,:]
+        #self.fieldr[FU,:,0] = self.fieldr[FU,:,1]
+        #self.fieldr[FU,:,-1] = self.fieldr[FU,:,-2]
 
-        n0 = self.n0
-        k0 = self.k0
-        dx = self.dx
-        dz = self.dz
+        # Boundary (will be replaced by PML)
+        self.fieldi[FU,0,:] = 2*self.fieldi[FU,1,:] - self.fieldi[FU,2,:]
+        self.fieldi[FU,-1,:] = 2*self.fieldi[FU,-2,:] - self.fieldi[FU,-3,:]
+        self.fieldi[FU,:,0] = 2*self.fieldi[FU,:,1] - self.fieldi[FU,:,2]
+        self.fieldi[FU,:,-1] = 2*self.fieldi[FU,:,-2] - self.fieldi[FU,:,-3]
+
+        # Boundary (will be replaced by PML)
+        self.fieldr[FU,0,:] = 2*self.fieldr[FU,1,:] - self.fieldr[FU,2,:]
+        self.fieldr[FU,-1,:] = 2*self.fieldr[FU,-2,:] - self.fieldr[FU,-3,:]
+        self.fieldr[FU,:,0] = 2*self.fieldr[FU,:,1] - self.fieldr[FU,:,2]
+        self.fieldr[FU,:,-1] = 2*self.fieldr[FU,:,-2] - self.fieldr[FU,:,-3]
+
+        #n0 = self.n0
+        #k0 = self.k0
+        #dx = self.dx
+        #dz = self.dz
         
         # Left Boundary
-        deltaphii = self.fieldi[FU,1,:] - self.fieldi[PR,1,:]
-        deltaphir = self.fieldr[FU,1,:] - self.fieldr[PR,1,:]
+        #beta = (self.fieldi[FU,1,:] - self.fieldi[PR,1,:])/dz/self.fieldr[FU,1,:]
+        #theta = np.sqrt(2*n0*k0*beta)*dx
 
-        self.fieldr[FU,0,:] = -2*dx/dz*deltaphir + self.fieldr[FU,1,:]
-        self.fieldi[FU,0,:] = 2*dx/dz*deltaphii + self.fieldi[FU,1,:]
+        #self.fieldr[FU,0,:] = self.fieldr[FU,-1,:]*np.cos(theta) - self.fieldi[FU,-1,:]*np.sin(theta)
+        #self.fieldi[FU,0,:] = self.fieldi[FU,-1,:]*np.cos(theta) + self.fieldr[FU,-1,:]*np.sin(theta)
 
         # Right Boundary
-        deltaphii = self.fieldi[FU,-2,:] - self.fieldi[PR,-2,:]
-        deltaphir = self.fieldr[FU,-2,:] - self.fieldr[PR,-2,:]
+        #beta = (self.fieldi[FU,-2,:] - self.fieldi[PR,-2,:])/dz/self.fieldr[FU,-2,:]
+        #theta = np.sqrt(2*n0*k0*beta)*dx
 
-        self.fieldr[FU,-1,:] = 2*dx/dz*deltaphii + self.fieldr[FU,-2,:]
-        self.fieldi[FU,-1,:] = -2*dx/dz*deltaphir + self.fieldi[FU,-2,:]
+        #self.fieldr[FU,-1,:] = self.fieldr[FU,-2,:]*np.cos(theta) - self.fieldi[FU,-2,:]*np.sin(theta)
+        #self.fieldi[FU,-1,:] = self.fieldi[FU,-2,:]*np.cos(theta) + self.fieldr[FU,-2,:]*np.sin(theta)
         
         # Up Boundary
-        deltaphii = self.fieldi[FU,:,1] - self.fieldi[PR,:,1]
-        deltaphir = self.fieldr[FU,:,1] - self.fieldr[PR,:,1]
+        #beta = (self.fieldi[FU,:,1] - self.fieldi[PR,:,1])/dz/self.fieldr[FU,:,1]
+        #theta = np.sqrt(2*n0*k0*beta)*dx
 
-        self.fieldr[FU,:,0] = -2*dx/dz*deltaphii + self.fieldr[FU,:,1]
-        self.fieldi[FU,:,0] = 2*dx/dz*deltaphir + self.fieldi[FU,:,1]
+        #self.fieldr[FU,:,0] = self.fieldr[FU,:,1]*np.cos(theta) - self.fieldi[FU,:,1]*np.sin(theta)
+        #self.fieldi[FU,:,0] = self.fieldi[FU,:,1]*np.cos(theta) + self.fieldr[FU,:,1]*np.sin(theta)
 
         # Down Boundary
-        deltaphii = self.fieldi[FU,:,-2] - self.fieldi[PR,:,-2]
-        deltaphir = self.fieldr[FU,:,-2] - self.fieldr[PR,:,-2]
+        #beta = (self.fieldi[FU,:,-2] - self.fieldi[PR,:,-2])/dz/self.fieldr[FU,:,-2]
+        #theta = np.sqrt(2*n0*k0*beta)*dx
 
-        self.fieldr[FU,:,-1] = 2*dx/dz*deltaphii + self.fieldr[FU,:,-2]
-        self.fieldi[FU,:,-1] = -2*dx/dz*deltaphir + self.fieldi[FU,:,-2]
+        #self.fieldr[FU,:,-1] = self.fieldr[FU,:,-2]*np.cos(theta) - self.fieldi[FU,:,-2]*np.sin(theta)
+        #self.fieldi[FU,:,-1] = self.fieldi[FU,:,-2]*np.cos(theta) + self.fieldr[FU,:,-2]*np.sin(theta)
     
     def output(self):
         '''
