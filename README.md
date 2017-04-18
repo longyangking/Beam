@@ -1,11 +1,17 @@
 # Beam
 > Beam Propagation Simulator
 
-![](./examples/initfield/honeycomb.jpeg)
 ## Features
-+ Finite-Difference Time-Domain Method
++ Finite-Difference Time-Domain Method (Debuging)
 + Custom Index Distribution
-+ Bulk/Edge Bandstructure Supported (coming)
++ Bulk/Edge Bandstructure Supported (Developing and debuging)
+
+## Examples
++ Field Calculation
+![](./examples/initfield/honeycomb.jpeg)
+
++ Bandstructure Analysis (Not final version)
+![](./examples/bandstructure/lieblattice.jpeg)
 
 ## Status
 Working on it
