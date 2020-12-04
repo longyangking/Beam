@@ -26,7 +26,7 @@ class BPM:
         self.verbose = verbose
 
         if self.verbose:
-            print 'dz = {dz}, Nz = {Nz}'.format(dz=self.dz,Nz=self.Nz)
+            print("dz = {dz}, Nz = {Nz}").format(dz=self.dz,Nz=self.Nz)
             self.pin = 0
             self.record = np.zeros([points,Nx,Ny],dtype=complex)
 
@@ -96,13 +96,13 @@ class BPM:
 
             if self.verbose:
                 if t%(self.Nz/20) == 0:
-                    print 'Finished = {num}%'.format(num=100.0*t/self.Nz)
+                    print("Finished = {num}%".format(num=100.0*t/self.Nz))
                 if t%(self.Nz/self.points) == 0 and self.pin < self.points:
                     self.record[self.pin,:,:] = self.fieldr[PR,:,:] + 1j*self.fieldi[PR,:,:]
                     self.pin += 1
 
         if self.verbose:
-            print 'Calculation complete!'
+            print("Calculation complete!")
 
     def absorb(self):
         '''

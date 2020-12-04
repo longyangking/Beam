@@ -58,7 +58,7 @@ class Bandstructure:
             betaZ = np.zeros((self.Nz,bands),dtype=complex)
 
         if self.verbose:
-            print 'Calculation with wave-vector ({kx},{ky})'.format(kx=kx,ky=ky)
+            print("Calculation with wave-vector ({kx},{ky})".format(kx=kx,ky=ky))
 
         for n in range(self.Ny):
             for m in range(self.Nx):
@@ -90,7 +90,7 @@ class Bandstructure:
                         H[m + n*self.Nx, m + n*self.Nx] = dn[m,n]*C0 - 2*C1 - 2*C2
 
                 if self.verbose:
-                    print 'Subprocess: step {step}/{totalstep} ...'.format(step=t+1,totalstep=self.Nz)
+                    print("Subprocess: step {step}/{totalstep} ...".format(step=t+1,totalstep=self.Nz))
                 eigenValues,eigenVectors = linalg.eigs(H,k=bands,which='LR',tol=self.tolerance)
                 self.betaZ[t,:] = eigenValues
                 self.vectorZ[t,:,:] = eigenVectors
